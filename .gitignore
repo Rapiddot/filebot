@@ -1,0 +1,13 @@
+# Ignore everything
+*
+
+# But not these files...
+!.gitignore
+!build.xml
+!ivy.xml
+!source
+!template.latex
+# etc...
+
+# ...even if they are in subdirectories
+!*/

@@ -23,7 +23,12 @@ import net.filebot.util.FileUtilities;
 public class OpenSubtitlesSubtitleDescriptor implements SubtitleDescriptor, Serializable {
 
 	public static enum Property {
-		IDSubtitle, IDSubtitleFile, IDSubMovieFile, IDMovie, IDMovieImdb, SubFileName, SubLastTS, SubFormat, SubEncoding, SubHash, SubSize, MovieHash, MovieByteSize, MovieName, MovieNameEng, MovieYear, MovieReleaseName, MovieTimeMS, MovieFPS, MovieImdbRating, MovieKind, SeriesSeason, SeriesEpisode, SeriesIMDBParent, SubLanguageID, ISO639, LanguageName, UserID, UserRank, UserNickName, SubAddDate, SubAuthorComment, SubFeatured, SubComments, SubDownloadsCnt, SubHearingImpaired, SubRating, SubHD, SubBad, SubActualCD, SubSumCD, MatchedBy, QueryNumber, SubtitlesLink, SubDownloadLink, ZipDownloadLink;
+		IDSubtitle, IDSubtitleFile, IDSubMovieFile, IDMovie, IDMovieImdb, SubFileName, SubLastTS, SubFormat,
+		SubEncoding, SubHash, SubSize, MovieHash, MovieByteSize, MovieName, MovieNameEng, MovieYear,
+		MovieReleaseName, MovieTimeMS, MovieFPS, MovieImdbRating, MovieKind, SeriesSeason, SeriesEpisode,
+		SeriesIMDBParent, SubLanguageID, ISO639, LanguageName, UserID, UserRank, UserNickName, SubAddDate,
+		SubAuthorComment, SubFeatured, SubComments, SubDownloadsCnt, SubHearingImpaired, SubRating, SubHD,
+		SubBad, SubActualCD, SubSumCD, MatchedBy, QueryNumber, SubtitlesLink, SubDownloadLink, ZipDownloadLink;
 
 		public static <V> EnumMap<Property, V> asEnumMap(Map<String, V> stringMap) {
 			EnumMap<Property, V> enumMap = new EnumMap<Property, V>(Property.class);
@@ -58,6 +63,11 @@ public class OpenSubtitlesSubtitleDescriptor implements SubtitleDescriptor, Seri
 	@Override
 	public String getPath() {
 		return getProperty(Property.SubFileName);
+	}
+	
+	@Override
+	public String getSubAddDate() {
+		return getProperty(Property.SubAddDate);
 	}
 
 	@Override

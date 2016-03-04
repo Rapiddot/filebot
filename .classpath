@@ -33,5 +33,7 @@
 	<classpathentry kind="lib" path="lib/ivy/jar/language-detector.jar"/>
 	<classpathentry kind="lib" path="lib/ivy/bundle/guava.jar"/>
 	<classpathentry kind="lib" path="lib/ivy/jar/streamex.jar"/>
+	<classpathentry kind="lib" path="lib/ivy/jar/sqlite-jdbc.jar"/>
+	<classpathentry kind="lib" path="lib/ivy/jar/nestedvm.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

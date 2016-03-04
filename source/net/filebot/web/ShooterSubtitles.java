@@ -203,7 +203,7 @@ public class ShooterSubtitles implements VideoHashSubtitleService {
 		public String getName() {
 			return name;
 		}
-
+		
 		@Override
 		public String getLanguageName() {
 			return language;
@@ -224,6 +224,11 @@ public class ShooterSubtitles implements VideoHashSubtitleService {
 			return getName() + "." + getType();
 		}
 
+		@Override
+		public String getSubAddDate() {
+			return "";
+		}
+		
 		@Override
 		public long getLength() {
 			return -1;

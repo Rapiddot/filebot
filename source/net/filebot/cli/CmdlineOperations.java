@@ -844,6 +844,7 @@ public class CmdlineOperations implements CmdlineInterface {
 	private File downloadSubtitle(SubtitleDescriptor descriptor, File movieFile, SubtitleFormat outputFormat, Charset outputEncoding, SubtitleNaming naming) throws Exception {
 		// fetch subtitle archive
 		log.config(format("Fetching [%s]", descriptor.getPath()));
+		
 		MemoryFile subtitleFile = fetchSubtitle(descriptor);
 
 		// subtitle filename is based on movie filename
@@ -860,7 +861,7 @@ public class CmdlineOperations implements CmdlineInterface {
 		}
 
 		File destination = new File(movieFile.getParentFile(), naming.format(movieFile, descriptor, ext));
-		log.info(format("Writing [%s] to [%s]", subtitleFile.getName(), destination.getName()));
+		log.info(format("Writing [%s] to [%s], SubAddDate is [%s]", subtitleFile.getName(), destination.getName(), descriptor.getSubAddDate()));
 
 		writeFile(data, destination);
 		return destination;

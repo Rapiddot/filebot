@@ -82,6 +82,15 @@
 			<zipfileset src="${dir.dist}/filebot.jar" />
 
 			<!-- include libs -->
+			<!-- SQLite support -->
+			<zipfileset src="${dir.lib}/ivy/jar/sqlite-jdbc.jar">
+				<include name="org/sqlite/**" />
+			</zipfileset>
+
+			<zipfileset src="${dir.lib}/ivy/jar/nestedvm.jar">
+				<include name="org/ibex/**" />
+			</zipfileset>
+				
 			<zipfileset src="${dir.lib}/ivy/bundle/json-simple.jar">
 				<include name="org/json/simple/**" />
 			</zipfileset>

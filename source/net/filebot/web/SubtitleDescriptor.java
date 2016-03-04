@@ -12,9 +12,9 @@ public interface SubtitleDescriptor extends FileInfo {
 	@Override
 	String getName();
 
-
 	String getLanguageName();
-
+	
+	String getSubAddDate();
 
 	@Override
 	String getType();

@@ -11,6 +11,11 @@ import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 import org.codehaus.groovy.control.CompilerConfiguration;
 import org.codehaus.groovy.control.customizers.ImportCustomizer;
 import org.codehaus.groovy.jsr223.GroovyScriptEngineImpl;
@@ -41,6 +46,7 @@ public class ScriptShell {
 	}
 
 	public ScriptEngine createScriptEngine() {
+		
 		ResourceBundle bundle = ResourceBundle.getBundle(ScriptShell.class.getName());
 
 		CompilerConfiguration config = new CompilerConfiguration();
