@@ -7,6 +7,7 @@ import static net.filebot.MediaTypes.*;
 import static net.filebot.Settings.*;
 import static net.filebot.WebServices.*;
 import static net.filebot.hash.VerificationUtilities.*;
+import static net.filebot.web.ShooterSubtitles.*;
 import static net.filebot.media.MediaDetection.*;
 import static net.filebot.subtitle.SubtitleUtilities.*;
 import static net.filebot.util.FileUtilities.*;
@@ -744,7 +745,7 @@ public class CmdlineOperations implements CmdlineInterface {
 
 		// no subtitles for remaining video files
 		for (File it : remainingVideos) {
-			log.warning("No matching subtitles found: " + it);
+			log.warning("No matching subtitles found: " + it + "\nfile_hash: " + computeFileHash(it));
 		}
 
 		return subtitleFiles;
