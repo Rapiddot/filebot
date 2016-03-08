@@ -13,6 +13,8 @@ import static net.filebot.subtitle.SubtitleUtilities.*;
 import static net.filebot.util.FileUtilities.*;
 import static net.filebot.util.StringUtilities.*;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
@@ -865,6 +867,12 @@ public class CmdlineOperations implements CmdlineInterface {
 		log.info(format("Writing [%s] to [%s], SubAddDate is [%s]", subtitleFile.getName(), destination.getName(), descriptor.getSubAddDate()));
 
 		writeFile(data, destination);
+		
+		// Also cache file to $HOME/.filebot/cache/subs/<lang>/<sub>
+		String homeDir = System.getProperty("user.home");
+		File destinationCache = new File(homeDir + "/.filebot/cache/subs/" + descriptor.getLanguageName() + "/" + computeFileHash(movieFile));
+		FileUtils.copyFile(destination, destinationCache);
+		
 		return destination;
 	}
 
