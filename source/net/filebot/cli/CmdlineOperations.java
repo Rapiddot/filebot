@@ -84,6 +84,15 @@ import net.filebot.web.VideoHashSubtitleService;
 
 public class CmdlineOperations implements CmdlineInterface {
 
+	ArgumentBean cmdArguments;
+	
+	public CmdlineOperations(){
+	}
+	
+	public CmdlineOperations(ArgumentBean args){
+		cmdArguments = args;
+	}
+	
 	@Override
 	public List<File> rename(Collection<File> files, RenameAction action, String conflict, String output, String formatExpression, String db, String query, String sortOrder, String filterExpression, String lang, boolean strict) throws Exception {
 		ExpressionFormat format = (formatExpression != null) ? new ExpressionFormat(formatExpression) : null;
@@ -870,7 +879,7 @@ public class CmdlineOperations implements CmdlineInterface {
 		
 		// Also cache file to $HOME/.filebot/cache/subs/<lang>/<sub>
 		String homeDir = System.getProperty("user.home");
-		File destinationCache = new File(homeDir + "/.filebot/cache/subs/" + descriptor.getLanguageName() + "/" + computeFileHash(movieFile));
+		File destinationCache = new File(homeDir + "/.filebot/cache/subs/" + cmdArguments.getLocale() + "/" + computeFileHash(movieFile));
 		FileUtils.copyFile(destination, destinationCache);
 		
 		return destination;
