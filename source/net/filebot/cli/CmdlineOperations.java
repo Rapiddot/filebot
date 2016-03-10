@@ -756,7 +756,15 @@ public class CmdlineOperations implements CmdlineInterface {
 
 		// no subtitles for remaining video files
 		for (File it : remainingVideos) {
+			
+			// Also cache failed file to $HOME/.filebot/cache/subs/failed/<lang>/<sub>
+			String homeDir = System.getProperty("user.home");
+			File notFoundCache = new File(homeDir + "/.filebot/cache/subs/failed/" + language.getLocale() + "/" + computeFileHash(it));
+			notFoundCache.getParentFile().mkdirs(); 
+			notFoundCache.createNewFile();
+			
 			log.warning("No matching subtitles found: " + it + "\nfile_hash: " + computeFileHash(it));
+
 		}
 
 		return subtitleFiles;
