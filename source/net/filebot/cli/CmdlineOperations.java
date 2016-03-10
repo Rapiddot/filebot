@@ -85,6 +85,7 @@ import net.filebot.web.VideoHashSubtitleService;
 public class CmdlineOperations implements CmdlineInterface {
 
 	ArgumentBean cmdArguments;
+	Locale localeForInstance;
 	
 	public CmdlineOperations(){
 	}
@@ -697,13 +698,14 @@ public class CmdlineOperations implements CmdlineInterface {
 	@Override
 	public List<File> getSubtitles(Collection<File> files, String db, String query, String languageName, String output, String csn, String format, boolean strict) throws Exception {
 		final Language language = getLanguage(languageName);
+		localeForInstance = language.getLocale();
 		final Pattern databaseFilter = (db != null) ? Pattern.compile(db, Pattern.CASE_INSENSITIVE) : null;
 		final SubtitleNaming naming = getSubtitleNaming(format);
 
 		// when rewriting subtitles to target format an encoding must be defined, default to UTF-8
 		final Charset outputEncoding = (csn != null) ? Charset.forName(csn) : (output != null) ? Charset.forName("UTF-8") : null;
 		final SubtitleFormat outputFormat = (output != null) ? getSubtitleFormatByName(output) : null;
-
+				
 		// ignore anything that is not a video
 		files = filter(files, VIDEO_FILES);
 
@@ -887,7 +889,7 @@ public class CmdlineOperations implements CmdlineInterface {
 		
 		// Also cache file to $HOME/.filebot/cache/subs/<lang>/<sub>
 		String homeDir = System.getProperty("user.home");
-		File destinationCache = new File(homeDir + "/.filebot/cache/subs/" + cmdArguments.getLocale() + "/" + computeFileHash(movieFile));
+		File destinationCache = new File(homeDir + "/.filebot/cache/subs/" + localeForInstance + "/" + computeFileHash(movieFile));
 		FileUtils.copyFile(destination, destinationCache);
 		
 		return destination;
