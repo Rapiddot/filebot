@@ -59,7 +59,10 @@ public class ArgumentBean {
 
 	@Option(name = "--lang", usage = "Language", metaVar = "2-letter language code")
 	public String lang = "en";
-
+	
+	@Option(name = "--user", usage = "User requesting subtitles")
+	public String user;
+	
 	@Option(name = "-check", usage = "Create/Check verification files", metaVar = "fileset")
 	public boolean check;
 
@@ -104,7 +107,7 @@ public class ArgumentBean {
 
 	@Option(name = "-no-xattr", usage = "Disable extended attributes")
 	public boolean disableExtendedAttributes = false;
-
+	
 	@Option(name = "-version", usage = "Print version identifier")
 	public boolean version = false;
 
@@ -177,6 +180,10 @@ public class ArgumentBean {
 		return Language.findLanguage(lang);
 	}
 
+	public String getUser() {
+		return user;
+	}
+	
 	public Level getLogLevel() {
 		return Level.parse(log.toUpperCase());
 	}

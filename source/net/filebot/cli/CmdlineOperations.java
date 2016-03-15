@@ -86,12 +86,14 @@ public class CmdlineOperations implements CmdlineInterface {
 
 	ArgumentBean cmdArguments;
 	Locale localeForInstance;
+	String userForInstance;
 	
 	public CmdlineOperations(){
 	}
 	
 	public CmdlineOperations(ArgumentBean args){
 		cmdArguments = args;
+		userForInstance = cmdArguments.user;
 	}
 	
 	@Override
@@ -783,7 +785,10 @@ public class CmdlineOperations implements CmdlineInterface {
 	}
 
 	@Override
-	public List<File> getMissingSubtitles(Collection<File> files, String db, String query, final String languageName, String output, String csn, final String format, boolean strict) throws Exception {
+	public List<File> getMissingSubtitles(Collection<File> files, String db, String query, final String languageName, String output, String csn, final String format, boolean strict, String user) throws Exception {
+		
+		userForInstance = user;
+		
 		List<File> videoFiles = filter(filter(files, VIDEO_FILES), new FileFilter() {
 
 			// save time on repeating filesystem calls
@@ -884,8 +889,10 @@ public class CmdlineOperations implements CmdlineInterface {
 
 		File destination = new File(movieFile.getParentFile(), naming.format(movieFile, descriptor, ext));
 		log.info(format("Writing [%s] to [%s], SubAddDate is [%s]", subtitleFile.getName(), destination.getName(), descriptor.getSubAddDate()));
-
+		
 		writeFile(data, destination);
+		// Setting the right user:group for file
+        Runtime.getRuntime().exec("chown "+ userForInstance + ":" + userForInstance + " " + destination.getAbsolutePath());
 		
 		// Also cache file to $HOME/.filebot/cache/subs/<lang>/<sub>
 		String homeDir = System.getProperty("user.home");

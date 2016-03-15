@@ -9,7 +9,7 @@
 	<property name="version" value="${application.version}" />
 
 	<tstamp>
-		<format property="tstamp.date" pattern="yyyy-MM-dd" />
+		<format property="tstamp.date" pattern="dMMMyy" locale="en,GB" />
 	</tstamp>
 	<tstamp>
 		<format property="tstamp.year" pattern="yyyy" />
@@ -35,6 +35,10 @@
 	<property name="frs.release" value="web.sourceforge.net:/home/frs/project/f/fi/filebot/filebot" />
 	<property name="frs.website" value="web.sourceforge.net:htdocs" />
 
+	<target name="clean">
+		<delete dir="${dir.dist}" />
+		<delete dir="${dir.build}" />
+	</target>
 
 	<target name="resolve" description="Retrieve dependencies with Apache Ivy">
 		<delete dir="${dir.lib}/ivy" />
@@ -532,7 +536,7 @@
 		<!-- stage created .deb files in a temporary folder -->
 		<property name="deb.staging" location="${dir.dist}/deb" />
 		<mkdir dir="${deb.staging}" />
-		<deb debfilenameproperty="staging.file.deb" todir="${deb.staging}" package="filebot" version="${version}" architecture="${deb.arch}" section="misc" homepage="http://www.filebot.net/" priority="optional" postinst="${dir.installer}/deb/postinst.sh" prerm="${dir.installer}/deb/prerm.sh">
+		<deb debfilenameproperty="staging.file.deb" todir="${deb.staging}" package="filebot" version="${tstamp.date}" architecture="${deb.arch}" section="misc" homepage="http://www.filebot.net/" priority="optional" postinst="${dir.installer}/deb/postinst.sh" prerm="${dir.installer}/deb/prerm.sh">
 			<maintainer name="Reinhard Pointner" email="maintainer@filebot.net" />
 			<description synopsis="The ultimate TV and Movie Renamer">FileBot is the ultimate tool for renaming your movies, tv shows or anime and even downloading subtitles. It's smart, streamlined for simplicity and just works. Putting the super-efficient UI aside, it's also got a full-featured command-line interface and scripting engine for all sorts of automation. Anything is possible.</description>
 			<tarfileset fullpath="usr/share/filebot/FileBot.jar" file="${path.fatjar}" />
@@ -542,7 +546,7 @@
 			<tarfileset prefix="usr/share/filebot/bin" file="${dir.installer}/deb/filebot.sh" filemode="755" />
 			<tarfileset prefix="usr/share/applications" file="${dir.installer}/deb/FileBot.desktop" />
 		</deb>
-		<move tofile="${dir.dist}/filebot_${version}_${deb.arch}.deb" file="${staging.file.deb}" overwrite="no" failonerror="yes" />
+		<move tofile="${dir.dist}/filebot_${tstamp.date}_${deb.arch}.deb" file="${staging.file.deb}" overwrite="no" failonerror="yes" />
 		<delete dir="${deb.staging}" />
 	</target>
 
@@ -768,13 +772,6 @@
 			<replacefilter token="@{version}" value="${version}" />
 		</replace>
 	</target>
-
-
-	<target name="clean">
-		<delete dir="${dir.dist}" />
-		<delete dir="${dir.build}" />
-	</target>
-
 
 	<target name="test" depends="jar">
 		<junit printsummary="yes" fork="true">

@@ -311,10 +311,10 @@ public abstract class ScriptShellBaseClass extends Script {
 	}
 
 	private enum Option {
-		action, conflict, query, filter, format, db, order, lang, output, encoding, strict, forceExtractAll
+		action, conflict, query, filter, format, db, order, lang, user, output, encoding, strict, forceExtractAll
 	}
 
-	private static final CmdlineInterface cli = new CmdlineOperations();
+	private final CmdlineInterface cli = new CmdlineOperations();
 
 	public List<File> rename(Map<String, ?> parameters) throws Exception {
 		List<File> input = getInputFileList(parameters);
@@ -358,7 +358,7 @@ public abstract class ScriptShellBaseClass extends Script {
 
 		synchronized (cli) {
 			try {
-				return cli.getMissingSubtitles(input, asString(option.get(Option.db)), asString(option.get(Option.query)), asString(option.get(Option.lang)), asString(option.get(Option.output)), asString(option.get(Option.encoding)), asString(option.get(Option.format)), strict);
+				return cli.getMissingSubtitles(input, asString(option.get(Option.db)), asString(option.get(Option.query)), asString(option.get(Option.lang)), asString(option.get(Option.output)), asString(option.get(Option.encoding)), asString(option.get(Option.format)), strict, asString(option.get(Option.user)));
 			} catch (Exception e) {
 				printException(e, false);
 				return null;

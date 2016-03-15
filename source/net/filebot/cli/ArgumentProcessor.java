@@ -65,7 +65,7 @@ public class ArgumentProcessor {
 				}
 
 				if (args.getSubtitles) {
-					files.addAll(cli.getMissingSubtitles(files, WebServices.OpenSubtitles.getName(), args.query, args.lang, args.output, args.encoding, args.format, !args.nonStrict));
+					files.addAll(cli.getMissingSubtitles(files, WebServices.OpenSubtitles.getName(), args.query, args.lang, args.output, args.encoding, args.format, !args.nonStrict, args.user));
 				}
 
 				if (args.rename) {
