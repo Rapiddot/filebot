@@ -227,13 +227,19 @@ public final class WebServices {
 	}
 
 	public static String[] getLogin(String key) {
-		try {
-			String[] values = Settings.forPackage(WebServices.class).get(key, LOGIN_SEPARATOR).split(LOGIN_SEPARATOR, 2); // empty username/password by default
-			if (values != null && values.length == 2 && values[0] != null && values[1] != null) {
-				return values;
+		// We want to run multiple users so we don't use cached osdb.user
+		if (System.getProperty("user.name").equals("root")){
+			return new String[] { "", "" };
+		}
+		else{
+			try {
+				String[] values = Settings.forPackage(WebServices.class).get(key, LOGIN_SEPARATOR).split(LOGIN_SEPARATOR, 2); // empty username/password by default
+				if (values != null && values.length == 2 && values[0] != null && values[1] != null) {
+					return values;
+				}
+			} catch (Exception e) {
+				Logger.getLogger(WebServices.class.getName()).log(Level.WARNING, e.getMessage(), e);
 			}
-		} catch (Exception e) {
-			Logger.getLogger(WebServices.class.getName()).log(Level.WARNING, e.getMessage(), e);
 		}
 		return new String[] { "", "" };
 	}
@@ -243,7 +249,15 @@ public final class WebServices {
 		if ((user == null || user.isEmpty()) && (password == null || password.isEmpty())) {
 			if (LOGIN_OPENSUBTITLES.equals(id)) {
 				OpenSubtitles.setUser("", "");
-				Settings.forPackage(WebServices.class).remove(id);
+				
+				// We want to run multiple users so we don't use cached osdb.user
+				if (System.getProperty("user.name").equals("root")){
+					// Do nothing
+				}
+				else{
+					Settings.forPackage(WebServices.class).remove(id);
+				}
+					
 			} else {
 				throw new IllegalArgumentException();
 			}
@@ -256,7 +270,15 @@ public final class WebServices {
 			if (LOGIN_OPENSUBTITLES.equals(id)) {
 				String password_md5 = md5(password);
 				OpenSubtitles.setUser(user, password_md5);
-				Settings.forPackage(WebServices.class).put(id, join(LOGIN_SEPARATOR, user, password_md5));
+
+				// We want to run multiple users so we don't use cached osdb.user
+				if (System.getProperty("user.name").equals("root")){
+					// Do nothing
+				}
+				else{
+					Settings.forPackage(WebServices.class).put(id, join(LOGIN_SEPARATOR, user, password_md5));
+				}
+				
 			} else {
 				throw new IllegalArgumentException();
 			}
